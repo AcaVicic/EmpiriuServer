@@ -11,6 +11,7 @@ namespace Domain
     {
         public DbSet<User>? Users { get; set; }
         public DbSet<Quote>? Quotes { get; set; }
+        public DbSet<DailyJournal>? DailyJournals { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
