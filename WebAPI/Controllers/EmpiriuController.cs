@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
 
         // PUT api/<EmpiriuController>/5
         [HttpPut("Journal/{id}")]
-        public void PutJournal(int id, [FromBody] DailyJournal journal)
+        public void PutDailyJournal(int id, [FromBody] DailyJournal journal)
         {
             journal.User = context.Users.Find(journal.User.Id);
             context.DailyJournals.Update(journal);
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
 
         // DELETE api/<EmpiriuController>/5
         [HttpDelete("Journal/{id}")]
-        public void Delete(int id)
+        public void DeleteDailyJournal(int id)
         {
             DailyJournal journal = context.DailyJournals.Find(id);
             context.DailyJournals.Remove(journal);
