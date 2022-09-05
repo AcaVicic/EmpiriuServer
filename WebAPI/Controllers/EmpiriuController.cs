@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Controllers
 {
+    
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmpiriuController : ControllerBase
     {
 
@@ -44,6 +47,13 @@ namespace WebAPI.Controllers
         {
             Quote quote = context.Quotes.Find(id);
             return quote;
+        }
+
+        [HttpGet("User/{email}")]
+        public User GetUser(string email)
+        {
+            User user = context.Users.First(u => u.Email == email);
+            return user;
         }
 
         // POST api/<EmpiriuController>
