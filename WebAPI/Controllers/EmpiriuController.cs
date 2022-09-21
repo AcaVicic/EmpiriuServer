@@ -23,6 +23,12 @@ namespace WebAPI.Controllers
             this.context = new EmpiriuContext();
         }
 
+        public EmpiriuController(EmpiriuContext context)
+        {
+            this.context = context;
+        }
+
+
         // GET api/<EmpiriuController>/5
         [HttpGet("Journal/{userId}/{strDate}")]
         public DailyJournal GetJournal(int userId, string strDate)
@@ -30,8 +36,8 @@ namespace WebAPI.Controllers
             try
             {
                 string[] s = strDate.Split('.');
-                List<DailyJournal> list = context.DailyJournals.Include(j => j.User).ToList();
-                DailyJournal dj = list.First(j => j.Date.Day == Int32.Parse(s[0]) && j.Date.Month == Int32.Parse(s[1]) && j.Date.Year == Int32.Parse(s[2]) && j.User.Id == userId);
+                List<DailyJournal> list = context.DailyJournals!.Include(j => j.User).ToList();
+                DailyJournal dj = list.First(j => j.Date.Day == Int32.Parse(s[0]) && j.Date.Month == Int32.Parse(s[1]) && j.Date.Year == Int32.Parse(s[2]) && j.User!.Id == userId);
                 return dj;
             }
             catch (Exception)
@@ -45,14 +51,14 @@ namespace WebAPI.Controllers
         [HttpGet("Quote/{id}")]
         public Quote GetQuote(int id)
         {
-            Quote quote = context.Quotes.Find(id);
+            Quote quote = context.Quotes!.First(q => q.Id == id);
             return quote;
         }
 
         [HttpGet("User/{email}")]
         public User GetUser(string email)
         {
-            User user = context.Users.First(u => u.Email == email);
+            User user = context.Users!.First(u => u.Email == email);
             return user;
         }
 
@@ -60,17 +66,17 @@ namespace WebAPI.Controllers
         [HttpPost("Journal")]
         public void PostDailyJournal([FromBody] DailyJournal journal)
         {
-            journal.User = context.Users.Find(journal.User.Id);
-            context.DailyJournals.Add(journal);
+            journal.User = context.Users!.First(u => u.Id == journal.User!.Id);
+            context.DailyJournals!.Add(journal);
             context.SaveChanges();
         }
 
         // PUT api/<EmpiriuController>/5
         [HttpPut("Journal/{id}")]
-        public void PutDailyJournal(int id, [FromBody] DailyJournal journal)
+        public void PutDailyJournal([FromBody] DailyJournal journal)
         {
-            journal.User = context.Users.Find(journal.User.Id);
-            context.DailyJournals.Update(journal);
+            journal.User = context.Users!.First(u => u.Id == journal.User!.Id);
+            context.DailyJournals!.Update(journal);
             context.SaveChanges();
         }
 
@@ -78,8 +84,8 @@ namespace WebAPI.Controllers
         [HttpDelete("Journal/{id}")]
         public void DeleteDailyJournal(int id)
         {
-            DailyJournal journal = context.DailyJournals.Find(id);
-            context.DailyJournals.Remove(journal);
+            DailyJournal journal = context.DailyJournals!.First(j => j.Id == id)!;
+            context.DailyJournals!.Remove(journal);
             context.SaveChanges();
         }
     }

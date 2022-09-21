@@ -9,9 +9,9 @@ namespace Domain
 {
     public class EmpiriuContext : DbContext
     {
-        public DbSet<User>? Users { get; set; }
-        public DbSet<Quote>? Quotes { get; set; }
-        public DbSet<DailyJournal>? DailyJournals { get; set; }
+        public virtual DbSet<User>? Users { get; set; }
+        public virtual DbSet<Quote>? Quotes { get; set; }
+        public virtual DbSet<DailyJournal>? DailyJournals { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

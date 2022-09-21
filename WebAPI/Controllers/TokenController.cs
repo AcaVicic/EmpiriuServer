@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
                 {
                     //create claims details based on the user information
                     var claims = new[] {
-                        new Claim("Email", user.Email)
+                        new Claim("Email", user.Email!)
                     };
 
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
 
         private User? GetUser(string email, string password)
         {
-            return context.Users?.FirstOrDefault(u => u.Email == email && u.Password == password);
+            return context.Users!.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
     }
 }
