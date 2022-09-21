@@ -8,27 +8,44 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Controllers
 {
-    
+    /// <summary>
+    /// Class <c>EmpiriuController</c> represents service class which handles API requests. 
+    /// </summary>
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class EmpiriuController : ControllerBase
     {
-
+        /// <summary>
+        /// <value> 
+        /// Property <c>context</c> represents the instance which communicates with Empiriu database.
+        /// </value>
+        /// </summary>
         private EmpiriuContext context;
 
+        /// <summary>
+        /// This costructor initializes the new context.
+        /// </summary>
         public EmpiriuController()
         {
             this.context = new EmpiriuContext();
         }
-
+        /// <summary>
+        /// This costructor initializes the context to passed parameter.
+        /// </summary>
+        /// <param name="context">the new instance of context</param>
         public EmpiriuController(EmpiriuContext context)
         {
             this.context = context;
         }
 
-
+        /// <summary>
+        /// This method returns daily journal of a given date written by the given user.
+        /// </summary>
+        /// <param name="userId">the id of daily journal's author</param>
+        /// <param name="strDate">the string representation of date of daily journal's creation</param>
+        /// <returns>Daily journal of a given date written by the given user.</returns>
         // GET api/<EmpiriuController>/5
         [HttpGet("Journal/{userId}/{strDate}")]
         public DailyJournal GetJournal(int userId, string strDate)
@@ -47,6 +64,11 @@ namespace WebAPI.Controllers
             
         }
 
+        /// <summary>
+        /// This method returns today's quote.
+        /// </summary>
+        /// <param name="id">the id of today's quote</param>
+        /// <returns>Today's quote.</returns>
         // GET api/<EmpiriuController>/5
         [HttpGet("Quote/{id}")]
         public Quote GetQuote(int id)
@@ -55,6 +77,11 @@ namespace WebAPI.Controllers
             return quote;
         }
 
+        /// <summary>
+        /// This method returns user which uses given email.
+        /// </summary>
+        /// <param name="email">the email of given user</param>
+        /// <returns>User which uses given email.</returns>
         [HttpGet("User/{email}")]
         public User GetUser(string email)
         {
@@ -62,6 +89,10 @@ namespace WebAPI.Controllers
             return user;
         }
 
+        /// <summary>
+        /// This method inserts daily journal in the Empiriu database.
+        /// </summary>
+        /// <param name="journal">the daily journal to be inserted</param>
         // POST api/<EmpiriuController>
         [HttpPost("Journal")]
         public void PostDailyJournal([FromBody] DailyJournal journal)
@@ -71,6 +102,10 @@ namespace WebAPI.Controllers
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// This method updates daily journal in the Empiriu database.
+        /// </summary>
+        /// <param name="journal">the daily journal to be updated</param>
         // PUT api/<EmpiriuController>/5
         [HttpPut("Journal/{id}")]
         public void PutDailyJournal([FromBody] DailyJournal journal)
@@ -80,6 +115,10 @@ namespace WebAPI.Controllers
             context.SaveChanges();
         }
 
+        /// <summary>
+        /// This method deletes daily journal from the Empiriu database.
+        /// </summary>
+        /// <param name="journal">the daily journal to be deleted</param>
         // DELETE api/<EmpiriuController>/5
         [HttpDelete("Journal/{id}")]
         public void DeleteDailyJournal(int id)
