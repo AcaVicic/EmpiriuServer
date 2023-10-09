@@ -31,14 +31,6 @@ namespace WebAPI.Controllers
         {
             this.context = new EmpiriuContext();
         }
-        /// <summary>
-        /// This costructor initializes the context to passed parameter.
-        /// </summary>
-        /// <param name="context">the new instance of context</param>
-        public EmpiriuController(EmpiriuContext context)
-        {
-            this.context = context;
-        }
 
         /// <summary>
         /// This method returns daily journal of a given date written by the given user.
