@@ -34,7 +34,7 @@ namespace APITests
             var mockContext = new Mock<EmpiriuContext>();
             mockContext.Setup(m => m.DailyJournals).Returns(mockSet.Object);
 
-            var controller = new EmpiriuController(mockContext.Object);
+            var controller = new EmpiriuController();
             var dailyJournal = controller.GetJournal(1, "1.1.2022.");
 
             Assert.AreEqual(1, dailyJournal.Id);
@@ -71,7 +71,7 @@ namespace APITests
             var mockContext = new Mock<EmpiriuContext>();
             mockContext.Setup(m => m.Quotes).Returns(mockSet.Object);
 
-            var controller = new EmpiriuController(mockContext.Object);
+            var controller = new EmpiriuController();
             var quote = controller.GetQuote(1);
 
             Assert.AreEqual(1, quote.Id);
@@ -106,7 +106,7 @@ namespace APITests
             var mockContext = new Mock<EmpiriuContext>();
             mockContext.Setup(m => m.Users).Returns(mockSet.Object);
 
-            var controller = new EmpiriuController(mockContext.Object);
+            var controller = new EmpiriuController();
             var user = controller.GetUser("Neki email");
 
             Assert.AreEqual(1, user.Id);
@@ -140,7 +140,7 @@ namespace APITests
             mockContext.Setup(m => m.DailyJournals).Returns(mockSet.Object);
             mockContext.Setup(m => m.Users).Returns(mockSetUsers.Object);
 
-            var controller = new EmpiriuController(mockContext.Object);
+            var controller = new EmpiriuController();
             controller.PostDailyJournal(new DailyJournal()
             {
                 Id = 1,
@@ -184,7 +184,7 @@ namespace APITests
             mockContext.Setup(m => m.DailyJournals).Returns(mockSet.Object);
             mockContext.Setup(m => m.Users).Returns(mockSetUsers.Object);
 
-            var controller = new EmpiriuController(mockContext.Object);
+            var controller = new EmpiriuController();
             controller.PutDailyJournal(new DailyJournal()
             {
                 Id = 1,
@@ -227,7 +227,7 @@ namespace APITests
             var mockContext = new Mock<EmpiriuContext>();
             mockContext.Setup(m => m.DailyJournals).Returns(mockSet.Object);
 
-            var controller = new EmpiriuController(mockContext.Object);
+            var controller = new EmpiriuController();
             controller.DeleteDailyJournal(1);
 
             mockSet.Verify(m => m.Remove(It.IsAny<DailyJournal>()), Times.Once());

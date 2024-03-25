@@ -10,7 +10,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("MyPolicy",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200");
+            policy.WithOrigins("*");
             policy.WithHeaders("*");
             policy.WithMethods("*");
         });
@@ -54,7 +54,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapControllers();
 

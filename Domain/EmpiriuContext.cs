@@ -31,6 +31,8 @@ namespace Domain
         /// </summary>
         public virtual DbSet<DailyJournal>? DailyJournals { get; set; }
 
+
+        public virtual DbSet<MementoMori>? MementoMori { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Empiriu;");

@@ -56,6 +56,13 @@ namespace WebAPI.Controllers
             
         }
 
+        [HttpGet("Journal/{userId}")]
+        public async Task<List<DailyJournal>> GetAllJournals(int userId)
+        {
+            var journals = await context.DailyJournals!.Where(j => j.User!.Id == userId).OrderBy(j => j.Date).ToListAsync();
+            return journals;
+        }
+
         /// <summary>
         /// This method returns today's quote.
         /// </summary>
@@ -115,9 +122,25 @@ namespace WebAPI.Controllers
         [HttpDelete("Journal/{id}")]
         public void DeleteDailyJournal(int id)
         {
-            DailyJournal journal = context.DailyJournals!.First(j => j.Id == id)!;
+            DailyJournal journal = context.DailyJournals!.First(j => j.Id == id);
             context.DailyJournals!.Remove(journal);
             context.SaveChanges();
+        }
+
+        [HttpGet("MementoMori/{userId}")]
+        public async Task<MementoMori> GetMementoMori(int userId)
+        {
+            var mementoMori = await context.MementoMori!.Where(j => j.User!.Id == userId).FirstAsync();
+            return mementoMori;
+        }
+
+        [HttpGet("SaveMementoMori/{userId}")]
+        public async Task SaveMementoMori(int userId)
+        {
+            var mementoMori = await context.MementoMori!.Where(j => j.User!.Id == userId).FirstAsync();
+            mementoMori.FilledNumber += 1;
+            mementoMori.LastDate = DateTime.UtcNow;
+            await context.SaveChangesAsync();
         }
     }
 }
